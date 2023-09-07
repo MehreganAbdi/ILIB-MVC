@@ -1,4 +1,5 @@
 ﻿using ILIb1._1.Data;
+using ILIb1._1.InterFaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,23 +7,23 @@ namespace ILIb1._1.Controllers
 {
     public class BookController : Controller
     {
-        private readonly ApplicationDBContext _context;
+        private readonly IBookRepository _bookRepository;
 
-        public BookController( ApplicationDBContext context )
+        public BookController(IBookRepository bookRepository)
         {
-            _context = context;
+            _bookRepository = bookRepository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var Books = _context.Books.ToList();
-            return View(Books);
+            var Books =await _bookRepository.GetAll();
+
+            return  View(Books);
         }
 
-        public IActionResult Detail(int Id)
+        public async Task<IActionResult> Detail(int Id)
         {
-            var Book = _context.Books.Include(a => a.Author).FirstOrDefault(p => p.BookId == Id);
-
+            var Book = await _bookRepository.GetByIdAsync(Id);
             return View(Book);
         }
 

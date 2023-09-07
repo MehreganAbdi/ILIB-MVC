@@ -33,9 +33,12 @@ namespace ILIb1._1.Repository
             return await _context.Authors.ToListAsync(); 
         }
 
-        public async Task<Author> GetByIdAsync(int Id)
+        public async Task<IEnumerable<Book>> GetByIdAsync(int Id)
         {
-            return await _context.Authors.Where(a => a.AuthorId == Id).FirstOrDefaultAsync();
+            
+            return await _context.Books.Include(b=>b.Author).Where(a => a.AuthorId == Id).ToListAsync();
+            
+            
         }
 
         public async Task<IEnumerable<Author>> GetByName(string name)
