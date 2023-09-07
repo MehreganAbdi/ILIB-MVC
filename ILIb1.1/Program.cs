@@ -1,4 +1,6 @@
 using ILIb1._1.Data;
+using ILIb1._1.InterFaces;
+using ILIb1._1.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace ILIb1._1
@@ -11,6 +13,8 @@ namespace ILIb1._1
 
 			// Add services to the container.
 			builder.Services.AddControllersWithViews();
+			builder.Services.AddScoped<IBookRepository, BookRepository>();
+			builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 			builder.Services.AddDbContext<ApplicationDBContext>(options =>
 			{
 				options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));

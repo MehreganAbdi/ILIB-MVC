@@ -5,7 +5,7 @@ VisualStudioVersion = 17.7.34018.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LIB", "LIB", "{1D772225-8193-4903-B25A-D97E51952CAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ILIb1.1", "ILIb1.1\ILIb1.1.csproj", "{B158D17F-6E1C-4B78-93E0-B1E75BA11E62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ILIb1.1", "ILIb1.1\ILIb1.1.csproj", "{B158D17F-6E1C-4B78-93E0-B1E75BA11E62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
