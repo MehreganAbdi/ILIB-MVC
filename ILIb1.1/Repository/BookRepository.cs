@@ -1,43 +1,61 @@
-﻿using ILIb1._1.InterFaces;
+﻿using ILIb1._1.Data;
+using ILIb1._1.InterFaces;
 using ILIb1._1.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ILIb1._1.Repository
 {
     public class BookRepository : IBookRepository
     {
-        bool IBookRepository.Add(Book book)
+        private readonly ApplicationDBContext _context;
+
+        public BookRepository(ApplicationDBContext context)
         {
-            throw new NotImplementedException();
+                _context = context;
         }
 
-        bool IBookRepository.Delete(Book book)
+        public bool Add(Book book)
         {
-            throw new NotImplementedException();
+            _context.Add(book);
+
+            return Save();
         }
 
-        Task<IEnumerable<Book>> IBookRepository.GetAll()
+        public bool Delete(Book book)
         {
-            throw new NotImplementedException();
+            _context.Remove(book);
+
+            return Save();
         }
 
-        Task<Book> IBookRepository.GetByIdAsync(int Id)
+        public async Task<IEnumerable<Book>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _context.Books.ToListAsync();
         }
 
-        Task<Book> IBookRepository.GetByTitle()
+        public async Task<Book> GetByIdAsync(int Id)
         {
-            throw new NotImplementedException();
+            return await _context.Books.FirstOrDefaultAsync(b => b.BookId == Id);
         }
 
-        bool IBookRepository.Save()
+        public async Task<IEnumerable<Book>> GetByTitle(string title)
         {
-            throw new NotImplementedException();
+            return await _context.Books.Where(b => b.Title.Contains(title)).ToListAsync();
         }
 
-        bool IBookRepository.Update(Book book)
+
+        public bool Update(Book book)
         {
-            throw new NotImplementedException();
+            _context.Update(book);
+            return Save();
         }
+
+        public bool Save()
+        {
+            var saveVal = _context.SaveChanges();
+            return saveVal > 0 ? true : false;
+        }
+
+        
     }
 }

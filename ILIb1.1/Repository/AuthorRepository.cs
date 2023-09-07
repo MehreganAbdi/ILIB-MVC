@@ -1,38 +1,58 @@
-﻿using ILIb1._1.InterFaces;
+﻿using ILIb1._1.Data;
+using ILIb1._1.InterFaces;
 using ILIb1._1.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ILIb1._1.Repository
 {
     public class AuthorRepository : IAuthorRepository
     {
-        bool IAuthorRepository.Add(Author author)
+        private readonly ApplicationDBContext _context;
+
+        public AuthorRepository(ApplicationDBContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        bool IAuthorRepository.Delete(Author author)
+        public bool Add(Author author)
         {
-            throw new NotImplementedException();
+            _context.Add(author);
+
+            return Save();
         }
 
-        Task<IEnumerable<Author>> IAuthorRepository.GetAll()
+        public bool Delete(Author author)
         {
-            throw new NotImplementedException();
+            _context.Remove(author);
+
+            return Save();
         }
 
-        Task<Author> IAuthorRepository.GetByIdAsync(int Id)
+        public async Task<IEnumerable<Author>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _context.Authors.ToListAsync(); 
         }
 
-        bool IAuthorRepository.Save()
+        public async Task<Author> GetByIdAsync(int Id)
         {
-            throw new NotImplementedException();
+            return await _context.Authors.Where(a => a.AuthorId == Id).FirstOrDefaultAsync();
         }
 
-        bool IAuthorRepository.Update(Author author)
+        public async Task<IEnumerable<Author>> GetByName(string name)
         {
-            throw new NotImplementedException();
+            return await _context.Authors.Where(a => a.FullName.Contains(name)).ToListAsync();
+        }
+
+        public bool Save()
+        {
+            var saveVal = _context.SaveChanges();
+            return saveVal > 0 ? true:false;
+        }
+
+        public bool Update(Author author)
+        {
+            _context.Update(author);
+            return Save();
         }
     }
 }
