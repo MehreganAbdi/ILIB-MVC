@@ -37,7 +37,7 @@
     </div><br /><br />
     <div class="form-group">
         <label asp-for="Author.FullName">Author</label>
-        <input asp-for="Author.FullName" type="text" class="form-control" value="@Model.Author" placeholder="Author's Name'">
+        <input asp-for="Author.FullName" type="text" class="form-control" value="@Model.Author.FullName" placeholder="Author's Name'">
         <span asp-validation-for="Author.FullName" class="text-danger"></span>
     </div>
 
