@@ -37,6 +37,10 @@ namespace ILIb1._1.Repository
         {
             return await _context.Books.Include(a=>a.Author).FirstOrDefaultAsync(b => b.BookId == Id) ;
         }
+        public async Task<Book> GetByIdAsyncAsNoTracking(int Id)
+        {
+            return await _context.Books.Include(a => a.Author).AsNoTracking().FirstOrDefaultAsync(b => b.BookId == Id);
+        }
 
         public async Task<IEnumerable<Book>> GetByTitle(string title)
         {
