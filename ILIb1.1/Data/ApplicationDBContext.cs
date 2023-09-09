@@ -1,9 +1,10 @@
 ﻿using ILIb1._1.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
 namespace ILIb1._1.Data
 {
-	public class ApplicationDBContext : DbContext
+	public class ApplicationDBContext : IdentityDbContext<AppUser>
 	{
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
         {

@@ -10,8 +10,8 @@
         <p class="lead text-muted">you can loan available books and book any book you want.<br />
             make sure to register!</p>
         <p>
-            <a href="#" class="btn btn-primary my-2">Main call to action</a>
-            <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+            <a asp-area="" asp-controller="Book" asp-action="Create" class="btn btn-primary my-2">Add Book</a>
+           
         </p>
     </div>
 </section>
@@ -32,7 +32,7 @@
                         </p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <a type="button" class="btn btn-sm btn-outline-secondary" asp-controller="Book" asp-action="Detail" asp-route-id="@item.BookId">View</a>
+                                <a type="button" class="btn btn-sm btn-outline-secondary" asp-controller="Book" asp-action="Detail" asp-route-fullname="@item.BookId">View</a>
                                 <a type="button" class="btn btn-sm btn-outline-secondary" asp-controller="Book" asp-action="Edit" asp-route-id="@item.BookId">Edit</a>
 
                             </div>
