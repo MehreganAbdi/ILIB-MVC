@@ -102,5 +102,25 @@ namespace ILIb1._1.Controllers
             }
         }
 
+        public async Task<IActionResult> Delete(int Id)
+        {
+            var theBook = await _bookRepository.GetByIdAsync(Id);
+            if (theBook == null) return View("Error");
+
+            return View(theBook);
+
+        }
+
+        [HttpPost , ActionName("Delete")]
+        public async Task<IActionResult> DeleteBook(int Id)
+        {
+            var theBook = await _bookRepository.GetByIdAsync(Id);
+            if (theBook == null) return View("Error");
+
+            _bookRepository.Delete(theBook);
+
+            return RedirectToAction("Index");
+        }
+
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ILIb1._1.Data
 {
-    public class ApplicationDBContext : IdentityDbContext<AppUser>
+    public class ApplicationDBContext : DbContext
     {
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
         {

@@ -1,0 +1,47 @@
+﻿@using ILIb1._1.Data.Enum;
+@using ILIb1._1.ViewModels
+@model Book
+
+@{
+    ViewData["Title"] = "Delete Book";
+}
+
+<form method="post" asp-action="Delete">
+    <input type="hidden" value="AuthorId" id="AuthorId" />
+    <div class="form-group">
+        <label asp-for="Title">Title</label>
+        <input asp-for="Title" type="text" value="@Model.Title" class="form-control" placeholder="Enter Book Title">
+        <span asp-validation-for="Title" class="text-danger"></span>
+        <small class="form-text text-muted">Enter the book title exactly like how it's written on the first page of the book . </small>
+    </div>
+    <div class="form-group">
+        <label asp-for="Edition">Edition</label>
+        <input asp-for="Edition" type="number" value="@Model.Edition" class="form-control" placeholder="Edition">
+        <span asp-validation-for="Edition" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Year">Year</label>
+        <input asp-for="Year" type="number" value="@Model.Year" class="form-control" placeholder="Year">
+        <span asp-validation-for="Year" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description">Description</label>
+        <input asp-for="Description" type="text" value="@Model.Description" class="form-control" placeholder="Description">
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div><br /><br />
+    <div class="form-group">
+        <label asp-for="BookCategory">Book Category</label>
+        <select asp-for="BookCategory" onselect="@Model.BookCategory" asp-items="@Html.GetEnumSelectList<BookCategory>()">
+            <option> - - select - - </option>
+        </select>
+    </div><br /><br />
+    <div class="form-group">
+        <label asp-for="Author.FullName">Author</label>
+        <input asp-for="Author.FullName" type="text" class="form-control" value="@Model.Author.FullName" placeholder="Author's Name'">
+        <span asp-validation-for="Author.FullName" class="text-danger"></span>
+    </div>
+
+    <br />
+    <button type="submit" class="btn btn-primary">Delete</button>
+</form>
+
