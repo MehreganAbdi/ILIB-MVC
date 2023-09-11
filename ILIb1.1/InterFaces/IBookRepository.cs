@@ -8,6 +8,7 @@ namespace ILIb1._1.InterFaces
         Task<IEnumerable<Book>> GetByTitle(string title);
         Task<Book> GetByIdAsync(int Id);
         Task<Book> GetByIdAsyncAsNoTracking(int Id);
+        Author GetByAuthourName(string authorName);
         bool Add(Book book);
         bool Delete(Book book);
         bool Update(Book book);

@@ -40,6 +40,13 @@ namespace ILIb1._1.Repository
             
             
         }
+        public async Task<IEnumerable<Book>> GetByIdAsyncNoTracking(int Id)
+        {
+
+            return await _context.Books.Include(b => b.Author).AsNoTracking().Where(a => a.AuthorId == Id).ToListAsync();
+
+
+        }
 
         public async Task<IEnumerable<Author>> GetByName(string name)
         {
