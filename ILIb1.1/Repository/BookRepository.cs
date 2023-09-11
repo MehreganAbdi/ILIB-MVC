@@ -1,6 +1,7 @@
 ﻿using ILIb1._1.Data;
 using ILIb1._1.InterFaces;
 using ILIb1._1.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ILIb1._1.Repository
@@ -35,12 +36,18 @@ namespace ILIb1._1.Repository
 
         public async Task<Book> GetByIdAsync(int Id)
         {
-            return await _context.Books.Include(a=>a.Author).FirstOrDefaultAsync(b => b.BookId == Id) ;
+            return await _context.Books.Include(a=>a.Author).Where(b => b.BookId == Id).FirstOrDefaultAsync() ;
         }
         public async Task<Book> GetByIdAsyncAsNoTracking(int Id)
         {
-            return await _context.Books.Include(a => a.Author).AsNoTracking().FirstOrDefaultAsync(b => b.BookId == Id);
+            return await _context.Books.Include(a => a.Author).AsNoTracking().Where(b=>b.BookId==Id).FirstOrDefaultAsync();
         }
+
+        public Author GetByAuthourName(string authorName)
+        {
+         return  _context.Authors.Where(p => p.FullName == authorName).FirstOrDefault();
+           
+        }  
 
         public async Task<IEnumerable<Book>> GetByTitle(string title)
         {
