@@ -25,7 +25,7 @@ namespace ILIb1._1
 			if(args.Length==1 && args[0].ToLower() == "seeddata")
 			{
 				//Seed.SeedData(app);
-				Seed.SeedUsersAndRolesAsync(app);			
+				//Seed.SeedUsersAndRolesAsync(app);			
 			}
 
 
