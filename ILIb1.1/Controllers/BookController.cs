@@ -10,12 +10,10 @@ namespace ILIb1._1.Controllers
     public class BookController : Controller
     {
         private readonly IBookRepository _bookRepository;
-        private readonly IAuthorRepository _authorRepository;
 
-        public BookController(IBookRepository bookRepository , IAuthorRepository authorRepository)
+        public BookController(IBookRepository bookRepository )
         {
             _bookRepository = bookRepository;
-            _authorRepository = authorRepository;
         }
 
         public async Task<IActionResult> Index()
@@ -25,10 +23,15 @@ namespace ILIb1._1.Controllers
             return View(Books);
         }
 
+        [ActionName("Detail")]
         public async Task<IActionResult> Detail(int Id)
         {
-            var Book = await _bookRepository.GetByIdAsync(Id);
-            return View(Book);
+            var theBook = await _bookRepository.GetByIdAsync(Id);
+            if (theBook == null) return View("Error");
+
+            return View(theBook);
+
+            
         }
 
         public IActionResult Create()
@@ -43,25 +46,7 @@ namespace ILIb1._1.Controllers
             {
                 return View(book);
             }
-            var author = _bookRepository.GetByAuthourName(book.Author.FullName);
-            if (author == null)
-            {
-                _bookRepository.Add(book);
-                return RedirectToAction("Index");
-            }
-            
-            var authorId = _authorRepository.GetByIdAsyncNoTracking(author.AuthorId);
-            
-            author.BooksByAuthor.Add(book);
-
-            var updatedAuthor = new Author
-            {
-                AuthorId = book.AuthorId,
-                FullName = book.Author.FullName,
-                BooksByAuthor = author.BooksByAuthor
-            };
-
-            _authorRepository.Update(updatedAuthor);
+            _bookRepository.Add(book);
 
             return RedirectToAction("Index");
 
