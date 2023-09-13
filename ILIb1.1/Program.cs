@@ -1,13 +1,16 @@
 using ILIb1._1.Data;
 using ILIb1._1.InterFaces;
+using ILIb1._1.Models;
 using ILIb1._1.Repository;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 namespace ILIb1._1
 {
 	public class Program
 	{
-		public static void Main(string[] args)
+		public static async Task Main(string[] args)
 		{
 			var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +22,15 @@ namespace ILIb1._1
 			{
 				options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 			});
+			builder.Services.AddIdentity<AppUser, IdentityRole>()
+				.AddEntityFrameworkStores<ApplicationDBContext>();
+
+			builder.Services.AddMemoryCache();
+			builder.Services.AddSession();
+			builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+				.AddCookie();
+
+
 
 			var app = builder.Build();
 
@@ -26,7 +38,7 @@ namespace ILIb1._1
 			{
 				//
 				//Seed.SeedData(app);
-				//Seed.SeedUsersAndRolesAsync(app);			
+				//await Seed.SeedUsersAndRolesAsync(app);			
 			}
 
 
