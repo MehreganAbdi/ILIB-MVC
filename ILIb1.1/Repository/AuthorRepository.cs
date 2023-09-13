@@ -30,28 +30,26 @@ namespace ILIb1._1.Repository
 
         public async Task<IEnumerable<Author>> GetAll()
         {
-            return await _context.Authors.ToListAsync(); 
+            return await _context.Books.Include(p => p.Author).Select(o => o.Author).ToListAsync(); 
         }
 
-        public async Task<IEnumerable<Book>> GetByIdAsync(int Id)
+        public async Task<Author> GetByIdAsync(int Id)
         {
             
-            return await _context.Books.Include(b=>b.Author).Where(a => a.AuthorId == Id).ToListAsync();
-            
-            
+            return await _context.Authors.Where(p => p.AuthorId == Id).FirstOrDefaultAsync();
+
+
         }
-        public async Task<IEnumerable<Book>> GetByIdAsyncNoTracking(int Id)
+
+        public async Task<Author> GetByIdAsyncNoTracking(int Id)
         {
 
-            return await _context.Books.Include(b => b.Author).AsNoTracking().Where(a => a.AuthorId == Id).ToListAsync();
+            return await _context.Authors.Where(p => p.AuthorId == Id).AsNoTracking().FirstOrDefaultAsync(); 
 
 
         }
 
-        public async Task<IEnumerable<Author>> GetByName(string name)
-        {
-            return await _context.Authors.Where(a => a.FullName.Contains(name)).ToListAsync();
-        }
+        
 
         public bool Save()
         {
@@ -63,6 +61,12 @@ namespace ILIb1._1.Repository
         {
             _context.Update(author);
             return Save();
+        }
+
+        public async Task<IEnumerable<Book>> GetBooksByAuthor(int Id)
+        {
+            var authorName =  GetByIdAsync(Id).Result.FullName;
+            return await _context.Books.Include(a => a.Author).Where(b => b.Author.FullName == authorName).ToListAsync();
         }
     }
 }
