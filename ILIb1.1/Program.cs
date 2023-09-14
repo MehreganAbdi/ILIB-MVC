@@ -40,7 +40,7 @@ namespace ILIb1._1
 			{
 				//
 				//Seed.SeedData(app);
-				await Seed.SeedUsersAndRolesAsync(app);			
+				//await Seed.SeedUsersAndRolesAsync(app);			
 			}
 
 
