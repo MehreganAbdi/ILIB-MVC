@@ -85,8 +85,17 @@ namespace ILIb1._1.Controllers
 
             if (user != null)
             {
-
+                TempData["Error"] = "This Email Already Exists";
+                return View(registerVM);
             }
+            var newUser = new AppUser()
+            {
+                Email = registerVM.EmailAddress,
+                 UserName = registerVM.EmailAddress
+
+            };
+            var newUserResponse = await _userManager.CreateAsync(newUser, registerVM.Password);
+
         }
     }
 }
