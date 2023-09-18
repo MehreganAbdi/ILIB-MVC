@@ -106,11 +106,11 @@ namespace ILIb1._1.Controllers
 
 
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> LogOut()
         {
             await _signinManager.SignOutAsync();
-            return RedirectToAction("Index", "Book");
+            return RedirectToAction("Index", "Author");
         }
     }
 }

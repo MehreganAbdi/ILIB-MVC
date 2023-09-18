@@ -36,16 +36,17 @@ namespace ILIb1._1
 
 			var app = builder.Build();
 
-			if(args.Length==1 && args[0].ToLower() == "seeddata")
-			{
-				//
-				//Seed.SeedData(app);
-				//await Seed.SeedUsersAndRolesAsync(app);			
-			}
+			
+            if (args.Length == 1 && args[0].ToLower() == "seeddata2")
+            {
+                //
+                //Seed.SeedData(app);
+                await Seed.SeedUsersAndRolesAsync(app);
+            }
 
 
-			// Configure the HTTP request pipeline.
-			if (!app.Environment.IsDevelopment())
+            // Configure the HTTP request pipeline.
+            if (!app.Environment.IsDevelopment())
 			{
 				app.UseExceptionHandler("/Home/Error");
 				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
@@ -56,7 +57,7 @@ namespace ILIb1._1
 			app.UseStaticFiles();
 
 			app.UseRouting();
-
+			app.UseAuthentication();
 			app.UseAuthorization();
 
 			app.MapControllerRoute(
