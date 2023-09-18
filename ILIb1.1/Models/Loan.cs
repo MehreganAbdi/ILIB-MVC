@@ -7,10 +7,13 @@ namespace ILIb1._1.Models
 	{
         [Key]
         public int LoanId { get; set; }
-        [ForeignKey("Book")][Required]
-        public int BookId { get; set; }
-        [ForeignKey("AppUser")][Required]
-        public int AppUserId { get; set; }
+        
+        [ForeignKey("UserId")][Required]
+        public int UserId { get; set; }
+
+        public DateTime? LoanDate { get; set; }
+        public ICollection<Book> RentedBooksByUser { get; set; }
+
 
     }
 }
