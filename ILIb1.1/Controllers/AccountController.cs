@@ -103,5 +103,14 @@ namespace ILIb1._1.Controllers
 
 
         }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> LogOut()
+        {
+            await _signinManager.SignOutAsync();
+            return RedirectToAction("Index", "Book");
+        }
     }
 }
