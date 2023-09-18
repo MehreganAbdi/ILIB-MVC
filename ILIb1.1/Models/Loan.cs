@@ -9,7 +9,7 @@ namespace ILIb1._1.Models
         public int LoanId { get; set; }
         
         [ForeignKey("UserId")][Required]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         public DateTime? LoanDate { get; set; }
         public ICollection<Book> RentedBooksByUser { get; set; }
