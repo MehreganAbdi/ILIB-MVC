@@ -52,7 +52,7 @@ namespace ILIb1._1.Controllers
                         return RedirectToAction("Index", "Book");
                     }
                 }
-                TempData["Error"] = "wrong Inputs";
+                TempData["Error"] = "password must include neccessary conditions";
                 return View(loginVM);
             }
             TempData["Error"] = "wrong Inputs";
@@ -67,7 +67,7 @@ namespace ILIb1._1.Controllers
         {
             //if we reload the page this will hold previos inserted values.
 
-            var reloadSafety = new LoginVM();
+            var reloadSafety = new RegisterVM();
             return View(reloadSafety);
 
         }
@@ -99,7 +99,8 @@ namespace ILIb1._1.Controllers
             {
                 await _userManager.AddToRoleAsync(newUser, UserRoles.User);
             }
-            return ViewModels("Registered!");
+            return RedirectToAction("Index", "Book");
+
 
         }
     }

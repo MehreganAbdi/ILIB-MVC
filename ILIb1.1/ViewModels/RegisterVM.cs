@@ -4,7 +4,7 @@ namespace ILIb1._1.ViewModels
 {
     public class RegisterVM
     {
-        [Display(Name ="Wmail Address")]
+        [Display(Name ="Email Address")]
         [Required(ErrorMessage ="Email Address is required")]
         public string EmailAddress { get; set; }
         [Required]
