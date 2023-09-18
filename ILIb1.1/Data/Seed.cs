@@ -119,7 +119,7 @@ namespace ILIb1._1.Data
 
 				//Users
 				var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
-				string adminUserEmail = "MehreganA97@gmail.com";
+				string adminUserEmail = "mehreganabdix@gmail.com";
 
 				var adminUser = await userManager.FindByEmailAsync(adminUserEmail);
 				if (adminUser == null)
@@ -132,23 +132,24 @@ namespace ILIb1._1.Data
 
 					};
 					await userManager.CreateAsync(newAdminUser, "Coding@1234?");
+					
 					await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
 				}
 
-				string appUserEmail = "user@etickets.com";
+				//string appUserEmail = "user@etickets.com";
 
-				var appUser = await userManager.FindByEmailAsync(appUserEmail);
-				if (appUser == null)
-				{
-					var newAppUser = new AppUser()
-					{
-						UserName = "app-user",
-						Email = appUserEmail,
-						EmailConfirmed = true,
-					};
-					await userManager.CreateAsync(newAppUser, "Coding@1234?");
-					await userManager.AddToRoleAsync(newAppUser, UserRoles.User);
-				}
+				//var appUser = await userManager.FindByEmailAsync(appUserEmail);
+				//if (appUser == null)
+				//{
+				//	var newAppUser = new AppUser()
+				//	{
+				//		UserName = "app-user",
+				//		Email = appUserEmail,
+				//		EmailConfirmed = true,
+				//	};
+				//	await userManager.CreateAsync(newAppUser, "Coding@1234?");
+				//	await userManager.AddToRoleAsync(newAppUser, UserRoles.User);
+				//}
 			}
 		}
 	}
