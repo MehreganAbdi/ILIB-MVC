@@ -15,6 +15,7 @@ namespace ILIb1._1.Data
         public DbSet<Book> Books { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Loan> Loans { get; set; }
+      
         public DbSet<AppUser> Users { get; set; }
 
 

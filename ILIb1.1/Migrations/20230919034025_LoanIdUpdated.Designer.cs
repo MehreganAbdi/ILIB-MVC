@@ -4,6 +4,7 @@ using ILIb1._1.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ILIb1._1.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230919034025_LoanIdUpdated")]
+    partial class LoanIdUpdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -140,6 +143,9 @@ namespace ILIb1._1.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("LoanId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -153,6 +159,8 @@ namespace ILIb1._1.Migrations
 
                     b.HasIndex("AuthorId");
 
+                    b.HasIndex("LoanId");
+
                     b.ToTable("Books");
                 });
 
@@ -163,9 +171,6 @@ namespace ILIb1._1.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LoanId"));
-
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("LoanDate")
                         .HasColumnType("datetime2");
@@ -324,6 +329,10 @@ namespace ILIb1._1.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ILIb1._1.Models.Loan", null)
+                        .WithMany("RentedBooksByUser")
+                        .HasForeignKey("LoanId");
+
                     b.Navigation("Author");
                 });
 
@@ -381,6 +390,11 @@ namespace ILIb1._1.Migrations
             modelBuilder.Entity("ILIb1._1.Models.AppUser", b =>
                 {
                     b.Navigation("UserBooks");
+                });
+
+            modelBuilder.Entity("ILIb1._1.Models.Loan", b =>
+                {
+                    b.Navigation("RentedBooksByUser");
                 });
 #pragma warning restore 612, 618
         }

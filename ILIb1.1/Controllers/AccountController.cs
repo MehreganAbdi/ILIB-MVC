@@ -52,10 +52,10 @@ namespace ILIb1._1.Controllers
                         return RedirectToAction("Index", "Book");
                     }
                 }
-                TempData["Error"] = "password must include neccessary conditions";
+                TempData["Error"] = "password must include Letters(a,A,b,B,..) , Numbers (0,1,2,...) And Other Signs(@,$,?,!,..).";
                 return View(loginVM);
             }
-            TempData["Error"] = "wrong Inputs";
+            TempData["Error"] = "This User Doesn't Exist , Try To Register First";
 
 
             return View(loginVM);

@@ -151,6 +151,29 @@ namespace ILIb1._1.Data
 				//	await userManager.AddToRoleAsync(newAppUser, UserRoles.User);
 				//}
 			}
-		}
-	}
+
+
+        }
+
+        public static void LoanSeedData(IApplicationBuilder applicationBuilder)
+        {
+            using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
+			{
+                var context = serviceScope.ServiceProvider.GetService<ApplicationDBContext>();
+				//if (!context.Loans.Any())
+				//{
+				//	var x = new Loan()
+				//	{
+				//		UserId = "0732b4b8-265c-4575-80a0-f42ff4d2a0d7",
+				//		RentedBooksByUser = context.Books.Take(1).ToList(),
+				//		LoanDate = DateTime.Now
+				//	};
+
+				//	context.Loans.Add(x);
+				//                context.SaveChanges();
+				//}
+				
+            }
+        }
+    }
 }

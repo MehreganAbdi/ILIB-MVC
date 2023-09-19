@@ -11,10 +11,14 @@
             you can loan available books and book any book you want.<br />
             make sure to register!
         </p>
-        <p>
-            <a asp-area="" asp-controller="Book" asp-action="Create" class="btn btn-primary my-2">Add Book</a>
+        @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+        {
+            <p>
+                <a asp-area="" asp-controller="Book" asp-action="Create" class="btn btn-primary my-2">Add Book</a>
 
-        </p>
+            </p>
+        }
+
     </div>
 </section>
 
@@ -36,8 +40,12 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                                 <a type="button" class="btn btn-sm btn-outline-secondary" asp-controller="Book" asp-action="Detail" asp-route-id="@item.BookId">View</a>
-                                <a type="button" class="btn btn-sm btn-outline-secondary" asp-controller="Book" asp-action="Edit" asp-route-id="@item.BookId">Edit</a>
-                                <a type="button" class="btn btn-sm btn-outline-secondary" asp-controller="Book" asp-action="Delete" asp-route-id="@item.BookId">Delete</a>
+                                @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                                {
+                                    <a type="button" class="btn btn-sm btn-outline-secondary" asp-controller="Book" asp-action="Edit" asp-route-id="@item.BookId">Edit</a>
+                                    <a type="button" class="btn btn-sm btn-outline-secondary" asp-controller="Book" asp-action="Delete" asp-route-id="@item.BookId">Delete</a>
+
+                                }
 
                             </div>
                             <small class="text-muted">published : @item.Year</small>
