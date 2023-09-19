@@ -32,10 +32,20 @@
                         </li>
                         @if (User.Identity.IsAuthenticated)
                         {
+                            @if (User.IsInRole("admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="AdminDashBoard" asp-action="Index">DashBoard</a>
+                                </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="UserDashBoard" asp-action="Index">DashBoard</a>
-                            </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="UserDashBoard" asp-action="Index">DashBoard</a>
+                                </li>
+
+                            }
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="LogOut">logOut</a>
                             </li>

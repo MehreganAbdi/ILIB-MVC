@@ -1,0 +1,48 @@
+﻿
+
+@{
+    ViewData["Title"] = "Admin";
+}
+
+
+
+
+
+
+
+<div class="text-center">
+    <h1 class="display-4">Choose An Action</h1>
+    <style>
+        button {
+            background-color: white;
+            color: black;
+            border: 0;
+            font-size: 40px;
+            transition:all 0.25s ease;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+            button:hover {
+                font-size:43px;
+                background-color: black;
+                color: white;
+                border-radius:10px;
+            }
+    </style>
+    <center>
+
+        <a asp-area="" asp-controller="AdminDashBoard" asp-action="Members">
+            <button type="button" >Members</button>
+        </a>
+        <br /><br /><br />
+        <a asp-area="" asp-controller="AdminDashBoard" asp-action="Loans">
+            <button type="button">Loans</button>
+        </a>
+        <br /><br /><br />
+        <a asp-area="" asp-controller="AdminDashBoard" asp-action="RemainedBooks">
+            <button type="button">Remained Book </button>
+        </a>
+        <br /><br /><br />
+    </center>
+</div>

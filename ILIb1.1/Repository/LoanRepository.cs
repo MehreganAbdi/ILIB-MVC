@@ -14,18 +14,35 @@ namespace ILIb1._1.Repository
         }
         public bool AddLoan(Loan loan)
         {
+
             _context.Add(loan);
-            return Save();
+            var response = Save();
+            if (response)
+            {
+                var x = _context.Users.FirstOrDefault(p => p.Id == loan.UserId);
+                if (x.BorrowedBookCount == null)
+                {
+                    x.BorrowedBookCount = 1;
+                    return Save();
+                }
+                else
+                {
+                    x.BorrowedBookCount += 1;
+                    return Save();
+                }
+
+            }
+            return false;
         }
 
-      
+
 
         public async Task<int> FinesValue(AppUser User)
         {
-            var pot =await  _context.Users.Where(p => p == User).FirstOrDefaultAsync();
-            
-            
-            return  (int)pot.Fines;
+            var pot = await _context.Users.Where(p => p == User).FirstOrDefaultAsync();
+
+
+            return (int)pot.Fines;
         }
 
         public async Task<int> AddFine(Loan loan)
@@ -48,14 +65,14 @@ namespace ILIb1._1.Repository
         //  ?
         public async Task<IEnumerable<Loan>> GetByUserIdAsync(string UserId)
         {
-            
+
             return await _context.Loans.Where(p => p.UserId == UserId).ToListAsync();
         }
 
         public async Task<bool> IsBlockByBookCount(AppUser User)
         {
             var x = await _context.Users.Where(p => p == User).FirstOrDefaultAsync();
-            return  x.BorrowedBookCount > 6 ? true : false;
+            return x.BorrowedBookCount > 6 ? true : false;
         }
 
         public async Task<bool> IsBlockedByFines(AppUser User)
@@ -74,11 +91,11 @@ namespace ILIb1._1.Repository
                 return false;
             }
             user.BorrowedBookCount--;
-            
+
             user.Fines += x;
 
             return Save();
-       }
+        }
         public bool Save()
         {
             var saveVal = _context.SaveChanges();
