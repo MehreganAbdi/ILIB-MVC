@@ -48,7 +48,8 @@ namespace ILIb1._1.Repository
         //  ?
         public async Task<IEnumerable<Loan>> GetByUserIdAsync(string UserId)
         {
-            return await _context.Loans.Include(l => l.UserId).Where(p => p.UserId == UserId).ToListAsync();
+            
+            return await _context.Loans.Where(p => p.UserId == UserId).ToListAsync();
         }
 
         public async Task<bool> IsBlockByBookCount(AppUser User)

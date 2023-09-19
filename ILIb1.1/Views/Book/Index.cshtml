@@ -35,11 +35,23 @@
                             <b>@item.Title</b> <br />
                             <br>
                             @item.Description
-
+                          
                         </p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                                 <a type="button" class="btn btn-sm btn-outline-secondary" asp-controller="Book" asp-action="Detail" asp-route-id="@item.BookId">View</a>
+                                @if( User.IsInRole("user") && User.Identity.IsAuthenticated)
+                                {
+                                    @if (item.BookCount > 0)
+                                    {
+                                        <a type="button" class="btn btn-sm btn-outline-secondary" asp-controller="UserDashBoard" asp-action="Loan" asp-route-id="@item.BookId">Loan</a>
+                                    }
+                                    else
+                                    {
+                                        <buttom type="button" class="btn btn-sm btn-outline-secondary" >Book Is Not Available</buttom>
+                                    }
+                                }
+                                        
                                 @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
                                 {
                                     <a type="button" class="btn btn-sm btn-outline-secondary" asp-controller="Book" asp-action="Edit" asp-route-id="@item.BookId">Edit</a>

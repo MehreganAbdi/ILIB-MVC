@@ -20,6 +20,11 @@
         <span asp-validation-for="Edition" class="text-danger"></span>
     </div>
     <div class="form-group">
+        <label asp-for="BookCount">Book Count</label>
+        <input asp-for="BookCount" type="number" value="@Model.BookCount" class="form-control" placeholder="count">
+        <span asp-validation-for="BookCount" class="text-danger"></span>
+    </div>
+    <div class="form-group">
         <label asp-for="Year">Year</label>
         <input asp-for="Year" type="number" value="@Model.Year" class="form-control" placeholder="Year">
         <span asp-validation-for="Year" class="text-danger"></span>
