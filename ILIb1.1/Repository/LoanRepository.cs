@@ -1,6 +1,7 @@
 ﻿using ILIb1._1.Data;
 using ILIb1._1.InterFaces;
 using ILIb1._1.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ILIb1._1.Repository
 {
@@ -13,6 +14,17 @@ namespace ILIb1._1.Repository
         }
         public bool AddLoan(Loan loan)
         {
+            foreach (var item in loan.RentedBooksByUser)
+            {
+                if (item.BookCount < 1) return false;
+                
+            }
+            foreach (var item in loan.RentedBooksByUser)
+            {
+                item.BookCount--;
+                Save();
+            }
+
             _context.Add(loan);
             return Save();
         }
@@ -20,45 +32,79 @@ namespace ILIb1._1.Repository
         public bool AddLoan(AppUser User, ICollection<Book> books)
         {
 
-            var loan = new Loan() {
-            UserId = User.Id,
+            var loan = new Loan()
+            {
+                UserId = User.Id,
+                LoanDate = DateTime.Now,
+                RentedBooksByUser = books,
+
             };
+            if(User.BorrowedBookCount > 6 || User.Fines > 10)
+            {
+                return false;
+            }
+            return AddLoan(loan);
+            
         }
 
-        public Task<int> FinesValue(AppUser User)
+        public async Task<int> FinesValue(AppUser User)
+        {
+            var pot =await  _context.Users.Where(p => p == User).FirstOrDefaultAsync();
+            
+            
+            return  (int)pot.Fines;
+        }
+
+        public Task<int> FinesValue(Loan loan)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Loan>> GetAll()
+        public async Task<IEnumerable<Loan>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _context.Loans.ToListAsync();
         }
 
-        public Task<IEnumerable<Loan>> GetByUserIdAsync(string UserId)
+        //  ?
+        public async Task<IEnumerable<Loan>> GetByUserIdAsync(string UserId)
         {
-            throw new NotImplementedException();
+            return await _context.Loans.Include(l => l.UserId).Where(p => p.UserId == UserId).ToListAsync();
         }
 
-        public Task<bool> IsBlockByBookCount(AppUser Uesr)
+        public async Task<bool> IsBlockByBookCount(AppUser User)
         {
-            throw new NotImplementedException();
+            var x = await _context.Users.Where(p => p == User).FirstOrDefaultAsync();
+            return  x.BorrowedBookCount > 6 ? true : false;
         }
 
-        public Task<bool> IsBlockedByFines(AppUser User)
+        public async Task<bool> IsBlockedByFines(AppUser User)
         {
-            throw new NotImplementedException();
+            var x = await _context.Users.Where(p => p == User).FirstOrDefaultAsync();
+            return x.Fines > 10 ? true : false;
         }
 
-        public Task<bool> Recieve(int LoanId, AppUser User)
+        public async Task<bool> Recieve(Loan loan, AppUser User)
         {
-            throw new NotImplementedException();
-        }
+            foreach (var item in loan.RentedBooksByUser)
+            {
+                var y = await _context.Books.Where(b => b == item).FirstOrDefaultAsync();
+                y.BookCount++;
+                Save();
+            }
 
-        public Task<bool> Recieve(int LoanId, string UserId)
-        {
-            throw new NotImplementedException();
-        }
+            var fine = (DateTime.Now - (loan.LoanDate)).Value.Days;
+            if (fine > 13)
+            {
+                User.Fines += (14 - fine);
+                Save();
+            }
+            foreach (var item in loan.RentedBooksByUser)
+            {
+                User.UserBooks.Remove(item);
+                Save();
+            }
+            return Save();
+       }
         public bool Save()
         {
             var saveVal = _context.SaveChanges();
