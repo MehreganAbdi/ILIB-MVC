@@ -16,8 +16,11 @@ namespace ILIb1._1
 
 			// Add services to the container.
 			builder.Services.AddControllersWithViews();
+			
 			builder.Services.AddScoped<IBookRepository, BookRepository>();
 			builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
+			builder.Services.AddScoped<ILoanRepository, LoanRepository>();
+
 			builder.Services.AddDbContext<ApplicationDBContext>(options =>
 			{
 				options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -39,9 +42,11 @@ namespace ILIb1._1
 			
             if (args.Length == 1 && args[0].ToLower() == "seeddata2")
             {
-                //
-                //Seed.SeedData(app);
-                await Seed.SeedUsersAndRolesAsync(app);
+				//
+				//Seed.SeedData(app);
+				//await Seed.SeedUsersAndRolesAsync(app);
+				Seed.LoanSeedData(app);
+				
             }
 
 
