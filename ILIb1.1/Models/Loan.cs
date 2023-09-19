@@ -13,7 +13,6 @@ namespace ILIb1._1.Models
         public string UserId { get; set; }
         
         
-        [ForeignKey("BookId")]
         [Required]
         public int BookId { get; set; }
 

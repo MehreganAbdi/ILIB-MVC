@@ -107,7 +107,7 @@ namespace ILIb1._1.Migrations
 
                     b.HasKey("AuthorId");
 
-                    b.ToTable("Authors");
+                    b.ToTable("Authors", (string)null);
                 });
 
             modelBuilder.Entity("ILIb1._1.Models.Book", b =>
@@ -153,7 +153,7 @@ namespace ILIb1._1.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("Books");
+                    b.ToTable("Books", (string)null);
                 });
 
             modelBuilder.Entity("ILIb1._1.Models.Loan", b =>
@@ -176,7 +176,7 @@ namespace ILIb1._1.Migrations
 
                     b.HasKey("LoanId");
 
-                    b.ToTable("Loans");
+                    b.ToTable("Loans", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
