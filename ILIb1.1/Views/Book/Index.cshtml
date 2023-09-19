@@ -35,9 +35,7 @@
                             <b>@item.Title</b> <br />
                             <br>
                             @item.Description
-                            @{
-                                var x = item.BookId;
-                            }
+                          
                         </p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
@@ -46,10 +44,7 @@
                                 {
                                     @if (item.BookCount > 0)
                                     {
-
-
-
-                                        <a type="button" class="btn btn-sm btn-outline-secondary" asp-controller="UserDashBoard" asp-action="Loan" asp-route-id="@x" >Loan</a>
+                                        <a type="button" class="btn btn-sm btn-outline-secondary" asp-controller="UserDashBoard" asp-action="Loan" asp-route-id="@item.BookId">Loan</a>
                                     }
                                     else
                                     {

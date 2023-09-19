@@ -34,27 +34,28 @@ namespace ILIb1._1.Controllers
         }
 
 
-        [ActionName("Loan")]
-        [HttpGet]
-        public async Task<IActionResult> Loan(int x)
+
+
+
+        public async Task<IActionResult> Loan(int Id)
         {
-            if (x == 0) return RedirectToAction("Index");
+            if (Id == 0) return RedirectToAction("Index");
 
             if (User.Identity.IsAuthenticated)
             {
                 var loan = new Loan()
                 {
-                    BookId = x,
+                    BookId = Id,
                     UserId = User.Identity.GetUserId(),
                     LoanDate = DateTime.Now
                   
                 };
-                var userloans = _loanRepository.GetByUserIdAsync(User.Identity.GetUserId()).Result;
+                var userloans =   _loanRepository.GetByUserIdAsync(User.Identity.GetUserId()).Result;
                 foreach (var item in userloans)
                 {
-                    if (item.BookId == x) return RedirectToAction("Index", "Book");
+                    if (item.BookId == Id) return RedirectToAction("Index", "Book");
                 }
-                var loanStatus =  _loanRepository.AddLoan(loan);
+                var loanStatus =   _loanRepository.AddLoan(loan);
                 if (loanStatus)
                 {
                     return RedirectToAction("Index", "Book");
