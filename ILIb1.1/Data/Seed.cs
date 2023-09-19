@@ -172,11 +172,7 @@ namespace ILIb1._1.Data
 				//	context.Loans.Add(x);
 				//                context.SaveChanges();
 				//}
-				var x = context.Loans.OrderBy(p=>p.LoanDate).FirstOrDefault();
-				foreach (var item in x.RentedBooksByUser)
-				{
-					Console.WriteLine(item.Title);
-				}
+				
             }
         }
     }

@@ -14,38 +14,11 @@ namespace ILIb1._1.Repository
         }
         public bool AddLoan(Loan loan)
         {
-            foreach (var item in loan.RentedBooksByUser)
-            {
-                if (item.BookCount < 1) return false;
-                
-            }
-            foreach (var item in loan.RentedBooksByUser)
-            {
-                item.BookCount--;
-                Save();
-            }
-
             _context.Add(loan);
             return Save();
         }
 
-        public bool AddLoan(AppUser User, ICollection<Book> books)
-        {
-
-            var loan = new Loan()
-            {
-                UserId = User.Id,
-                LoanDate = DateTime.Now,
-                RentedBooksByUser = books,
-
-            };
-            if(User.BorrowedBookCount > 6 || User.Fines > 10)
-            {
-                return false;
-            }
-            return AddLoan(loan);
-            
-        }
+      
 
         public async Task<int> FinesValue(AppUser User)
         {
@@ -55,9 +28,16 @@ namespace ILIb1._1.Repository
             return  (int)pot.Fines;
         }
 
-        public Task<int> FinesValue(Loan loan)
+        public async Task<int> AddFine(Loan loan)
         {
-            throw new NotImplementedException();
+            var x = await _context.Users.Where(p => p.Id == loan.UserId).FirstOrDefaultAsync();
+            var lateDays = (DateTime.Now - loan.LoanDate).Value.Days;
+            if (lateDays > 14)
+            {
+                x.Fines += (lateDays - 14);
+                Save();
+            }
+            return (int)x.Fines;
         }
 
         public async Task<IEnumerable<Loan>> GetAll()
@@ -83,26 +63,19 @@ namespace ILIb1._1.Repository
             return x.Fines > 10 ? true : false;
         }
 
-        public async Task<bool> Recieve(Loan loan, AppUser User)
+        public async Task<bool> Recieve(Loan loan)
         {
-            foreach (var item in loan.RentedBooksByUser)
-            {
-                var y = await _context.Books.Where(b => b == item).FirstOrDefaultAsync();
-                y.BookCount++;
-                Save();
-            }
+            var x = await AddFine(loan);
+            var user = await _context.Users.Where(p => p.Id == loan.UserId).FirstOrDefaultAsync();
 
-            var fine = (DateTime.Now - (loan.LoanDate)).Value.Days;
-            if (fine > 13)
+            if (user == null)
             {
-                User.Fines += (14 - fine);
-                Save();
+                return false;
             }
-            foreach (var item in loan.RentedBooksByUser)
-            {
-                User.UserBooks.Remove(item);
-                Save();
-            }
+            user.BorrowedBookCount--;
+            
+            user.Fines += x;
+
             return Save();
        }
         public bool Save()
