@@ -22,6 +22,11 @@
             <span asp-validation-for="Edition" class="text-danger"></span>
         </div>
         <div class="form-group">
+            <label asp-for="BookCount">BookCount</label>
+            <input asp-for="BookCount" type="number" class="form-control" placeholder="Count">
+            <span asp-validation-for="BookCount" class="text-danger"></span>
+        </div>
+        <div class="form-group">
             <label asp-for="Year">Year</label>
             <input asp-for="Year" type="number"  class="form-control" placeholder="Year">
             <span asp-validation-for="Year" class="text-danger"></span>
