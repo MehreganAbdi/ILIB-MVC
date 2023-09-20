@@ -19,6 +19,7 @@ namespace ILIb1._1.Controllers
         public async Task<IActionResult> Index()
         {
             var Books = await _bookRepository.GetAll();
+            
 
             return View(Books);
         }

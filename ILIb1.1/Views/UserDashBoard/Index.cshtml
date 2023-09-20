@@ -4,7 +4,7 @@
     ViewData["Title"] = "DahBoard";
     int i = 1;
 }
-  
+
 <div class="row">
     @foreach (var item in Model)
     {
@@ -22,27 +22,29 @@
 
                         <b>@item.LoanDate.Value</b> <br />
                         <br />
-                        
+
                     </p>
                     <div class="d-flex justify-content-between align-items-center">
-                            @{
-                                var x = (DateTime.Now - item.LoanDate).Value.Days;
-                                var remainingDays = 14 - x;
+                        @{
+                            var x = (DateTime.Now - item.LoanDate).Value.Days;
+                            var remainingDays = 14 - x;
+                        }
+                        <p>
+                            Remaining Days : @remainingDays
+                            <br>
+                            <br>
+                            @if (remainingDays < 0)
+                            {
+                                <small> ReLoan If You Want To Still Keep The Book ! </small>
+
+                                <br />
                             }
-                            <p>
-                                Remaining Days : @remainingDays
-                                <br>
-                                <br>
-                                @if (remainingDays < 0)
-                                {
-                                    <small> ReLoan If You Want To Still Keep The Book ! </small>
-                                }
-                            </p>
+                        </p>
                         <div class="btn-group">
                             <br />
+                            <a type="button" class="btn btn-sm btn-outline-secondary" asp-controller="UserDashBoard" asp-action="ReLoan" asp-route-id="@item.LoanId">ReLoan</a>
                             <a type="button" class="btn btn-sm btn-outline-secondary" asp-controller="Book" asp-action="Detail" asp-route-id="@item.BookId">View Book</a>
-                           
-                           
+
 
                         </div>
                     </div>

@@ -31,7 +31,7 @@ namespace ILIb1._1.Repository
 
         public async Task<IEnumerable<Book>> GetAll()
         {
-            return await _context.Books.ToListAsync();
+            return await _context.Books.Include(p=>p.Author).ToListAsync();
         }
 
         public async Task<Book> GetByIdAsync(int Id)
