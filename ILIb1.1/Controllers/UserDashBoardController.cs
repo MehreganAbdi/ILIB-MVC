@@ -1,6 +1,7 @@
 ﻿using ILIb1._1.InterFaces;
 using ILIb1._1.Models;
 using ILIb1._1.Repository;
+using ILIb1._1.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,12 +12,10 @@ namespace ILIb1._1.Controllers
     public class UserDashBoardController : Controller
     {
         private readonly ILoanRepository _loanRepository;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-
-        public UserDashBoardController(ILoanRepository loanRepository , IHttpContextAccessor httpContextAccessor)
+        
+        public UserDashBoardController(ILoanRepository loanRepository)
         {
             _loanRepository = loanRepository;
-            _httpContextAccessor = httpContextAccessor;
 
         }
 
@@ -85,7 +84,30 @@ namespace ILIb1._1.Controllers
 
         public async Task<IActionResult> EditProfile()
         {
+            var UserId = User.Identity.GetUserId();
+            var user = await _loanRepository.GetUserAsyncNoTracking(UserId);
+            var VModel = new EditProfVM()
+            {
+                UserName = user.UserName==null?"null":user.UserName,
+                PhoneNumber = user.PhoneNumber==null?0:user.PhoneNumber
+            };
+            return View(VModel); 
 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditProfile(EditProfVM editProfVM)
+        {
+            var UserId = User.Identity.GetUserId();
+            var user = await _loanRepository.GetUserAsyncNoTracking(UserId);
+
+            user.PhoneNumber = editProfVM.PhoneNumber;
+            user.UserName = editProfVM.UserName;
+            if (_loanRepository.UpdateUser(user))
+            {
+                return View("Index", "UserDashBoard");
+            }
+            return View(editProfVM);
         }
     }
 }

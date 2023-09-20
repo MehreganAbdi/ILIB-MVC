@@ -96,6 +96,17 @@ namespace ILIb1._1.Repository
 
             return Save();
         }
+        public async Task<AppUser> GetUserAsyncNoTracking(string Id)
+        {
+            return await _context.Users.Where(p => p.Id == Id).AsNoTracking().FirstOrDefaultAsync();
+        }
+        public bool UpdateUser(AppUser User)
+        {
+            var saved = _context.Users.Update(User);
+            return Save();
+        
+        }
+
         public bool Save()
         {
             var saveVal = _context.SaveChanges();
