@@ -12,11 +12,11 @@ namespace ILIb1._1.Controllers
     {
         private readonly ILoanRepository _loanRepository;
 
-        
+
         public UserDashBoardController(ILoanRepository loanRepository)
         {
             _loanRepository = loanRepository;
-            
+
         }
 
 
@@ -25,9 +25,9 @@ namespace ILIb1._1.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                
+
                 var model = await _loanRepository.GetByUserIdAsync(User.Identity.GetUserId());
-                return  View(model);
+                return View(model);
 
             }
             return RedirectToAction("Index", "Home");
@@ -48,22 +48,37 @@ namespace ILIb1._1.Controllers
                     BookId = Id,
                     UserId = User.Identity.GetUserId(),
                     LoanDate = DateTime.Now
-                  
+
                 };
-                var userloans =   _loanRepository.GetByUserIdAsync(User.Identity.GetUserId()).Result;
+                var userloans = _loanRepository.GetByUserIdAsync(User.Identity.GetUserId()).Result;
                 foreach (var item in userloans)
                 {
                     if (item.BookId == Id) return RedirectToAction("Index", "Book");
                 }
-                var loanStatus =   _loanRepository.AddLoan(loan);
+                var loanStatus = _loanRepository.AddLoan(loan);
                 if (loanStatus)
                 {
                     return RedirectToAction("Index", "Book");
                 }
-                return View("Index","DashBoard");
+                return View("Index", "DashBoard");
 
             }
             return RedirectToAction("Index", "Home");
+        }
+
+
+        public async Task<IActionResult> ReLoan(int Id)
+        {
+            var updatedLoan = await _loanRepository.GetAll();
+            var loan = updatedLoan.Where(p => p.LoanId == Id).FirstOrDefault();
+
+            loan.LoanDate = DateTime.Now;
+            var po = _loanRepository.Save();
+            if (po)
+            {
+                return RedirectToAction("Index", "UserDashBoard");
+            }
+            return RedirectToAction("Index", "Book");
         }
     }
 }

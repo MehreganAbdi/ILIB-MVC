@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Loan>
+
+
+
+    @{
+        ViewData["Title"] = "Loans";
+    }
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">UserId</th>
+            <th scope="col">LoanId</th>
+            <th scope="col">LoanDate</th>
+            
+        </tr>
+    </thead>
+    @{
+        var i = 1;
+    }
+    @foreach (var item in Model)
+    {
+        <tbody>
+            <tr>
+                <th scope="row">@i</th>
+                <td>@item.UserId</td>
+                <td>@item.LoanId</td>
+                <td>@item.LoanDate</td>
+                
+            </tr>
+        </tbody>
+        i++;
+    }
+
+</table>
