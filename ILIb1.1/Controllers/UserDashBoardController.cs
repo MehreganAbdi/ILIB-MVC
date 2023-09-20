@@ -11,11 +11,12 @@ namespace ILIb1._1.Controllers
     public class UserDashBoardController : Controller
     {
         private readonly ILoanRepository _loanRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-
-        public UserDashBoardController(ILoanRepository loanRepository)
+        public UserDashBoardController(ILoanRepository loanRepository , IHttpContextAccessor httpContextAccessor)
         {
             _loanRepository = loanRepository;
+            _httpContextAccessor = httpContextAccessor;
 
         }
 
@@ -79,6 +80,12 @@ namespace ILIb1._1.Controllers
                 return RedirectToAction("Index", "UserDashBoard");
             }
             return RedirectToAction("Index", "Book");
+        }
+
+
+        public async Task<IActionResult> EditProfile()
+        {
+
         }
     }
 }
