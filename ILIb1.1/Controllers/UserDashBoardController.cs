@@ -27,7 +27,12 @@ namespace ILIb1._1.Controllers
             {
 
                 var model = await _loanRepository.GetByUserIdAsync(User.Identity.GetUserId());
-                return View(model);
+                var modelWithDetails = new List<LoanVM>();
+                foreach (var item in model)
+                {
+                    modelWithDetails.Add(await _loanRepository.GetLoanDetail(item));
+                }
+                return View(modelWithDetails);
 
             }
             return RedirectToAction("Index", "Home");

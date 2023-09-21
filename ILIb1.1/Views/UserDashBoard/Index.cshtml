@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Loan>
+﻿@using ILIb1._1.ViewModels;
+@model IEnumerable<LoanVM>
 
 @{
     ViewData["Title"] = "DahBoard";
@@ -13,41 +14,32 @@
                 <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Thumbnail [100%x225]" style="height: 225px; width: 100%; display: block;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22208%22%20height%3D%22225%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20208%20225%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_18a6b72d789%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A11pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_18a6b72d789%22%3E%3Crect%20width%3D%22208%22%20height%3D%22225%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2266.9453125%22%20y%3D%22117.3%22%3EThumbnail%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
                 <div class="card-body">
                     <p class="card-text">
-                        <b>Loan @i Id :  </b>
+                        <b>Loan @i   </b>
                         @{
                             i++;
                         }
-                        <b> @item.LoanId</b> <br />
                         <br />
-
-                        <b>@item.LoanDate.Value</b> <br />
+                        <b> @item.Book.Title</b>
                         <br />
-
+                        <b>@item.Author.FullName</b>
+                        <br />
+                        <b>@item.Loan.LoanDate</b>
                     </p>
                     <div class="d-flex justify-content-between align-items-center">
                         @{
-                            var x = (DateTime.Now - item.LoanDate).Value.Days;
+                            var x = (DateTime.Now - item.Loan.LoanDate).Value.Days;
                             var remainingDays = 14 - x;
                         }
                         <p>
                             Remaining Days : @remainingDays
-                            <br>
-                            <br>
-                            @if (remainingDays < 0)
-                            {
-                                <small> ReLoan If You Want To Still Keep The Book ! </small>
-
-                                <br />
-                            }
                         </p>
-                        <div class="btn-group">
-                            <br />
-                            <a type="button" class="btn btn-sm btn-outline-secondary" asp-controller="UserDashBoard" asp-action="ReLoan" asp-route-id="@item.LoanId">ReLoan</a>
-                            <a type="button" class="btn btn-sm btn-outline-secondary" asp-controller="Book" asp-action="Detail" asp-route-id="@item.BookId">View Book</a>
-
-
-                        </div>
+                        
                     </div>
+                        <div class="btn-group">
+                          
+                            <a type="button" class="btn btn-sm btn-outline-secondary" asp-controller="UserDashBoard" asp-action="ReLoan" asp-route-id="@item.Loan.LoanId"><small>ReLoan for 14 Days (Max : 14 )</small></a>
+                            <a type="button" class="btn btn-sm btn-outline-secondary" asp-controller="Book" asp-action="Detail" asp-route-id="@item.Book.BookId">View Book</a>
+                        </div>
                 </div>
             </div>
         </div>
