@@ -1,5 +1,7 @@
 ﻿using ILIb1._1.Models;
 
+
+
 namespace ILIb1._1.InterFaces
 {
     public interface IBookRepository
@@ -7,6 +9,7 @@ namespace ILIb1._1.InterFaces
         Task<IEnumerable<Book>> GetAll();
         Task<IEnumerable<Book>> GetByTitle(string title);
         Task<Book> GetByIdAsync(int Id);
+        
         Task<Book> GetByIdAsyncAsNoTracking(int Id);
         Author GetByAuthourName(string authorName);
         bool Add(Book book);

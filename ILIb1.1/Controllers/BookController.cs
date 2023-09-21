@@ -16,12 +16,16 @@ namespace ILIb1._1.Controllers
             _bookRepository = bookRepository;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searching)
         {
             var Books = await _bookRepository.GetAll();
-            
-
-            return View(Books);
+            if (searching == null)
+            {
+                return View(Books);
+            }
+            var ans = Books.Where(x => (x.Title.Contains(searching) || x.BookCategory.ToString().Contains(searching) ||
+                                        x.Author.FullName.Contains(searching) || x.Description.Contains(searching))).ToList();
+            return View(ans); 
         }
 
         [ActionName("Detail")]
@@ -128,6 +132,15 @@ namespace ILIb1._1.Controllers
             _bookRepository.Delete(theBook);
 
             return RedirectToAction("Index");
+        }
+
+
+
+
+
+        public async Task<IActionResult> Search()
+        {
+            return View();
         }
 
     }
