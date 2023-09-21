@@ -13,6 +13,7 @@ namespace ILIb1._1.InterFaces
         Task<IEnumerable<Loan>> GetByUserIdAsync(string UserId);
         Task<bool> Recieve(Loan loan);
         bool Save();
-
+        bool UpdateUser(AppUser User);
+        Task<AppUser> GetUserAsyncNoTracking(string Id);
     }
 }
