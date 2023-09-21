@@ -89,7 +89,7 @@ namespace ILIb1._1.Controllers
             var VModel = new EditProfVM()
             {
                 UserName = user.UserName==null?"null":user.UserName,
-                PhoneNumber = user.PhoneNumber==null?0:user.PhoneNumber
+                PhoneNumber = user.PhoneNumber==null?"0":user.PhoneNumber
             };
             return View(VModel); 
 
@@ -103,9 +103,11 @@ namespace ILIb1._1.Controllers
 
             user.PhoneNumber = editProfVM.PhoneNumber;
             user.UserName = editProfVM.UserName;
-            if (_loanRepository.UpdateUser(user))
+            user.PhoneNumberConfirmed = true;
+            var x = _loanRepository.UpdateUser(user);
+            if (x)
             {
-                return View("Index", "UserDashBoard");
+                return RedirectToAction("Index", "UserDashBoard");
             }
             return View(editProfVM);
         }
