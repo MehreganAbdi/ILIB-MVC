@@ -9,8 +9,29 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ILIb1._1.styles.css" asp-append-version="true" />
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'>
+    <!-- Font Awesome CSS -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
 </head>
 <body>
+@*     <style>
+        .has-search .form-control {
+            padding-left: 2.375rem;
+        }
+
+        .has-search .form-control-feedback {
+            position: absolute;
+            z-index: 2;
+            display: block;
+            width: 2.375rem;
+            height: 2.375rem;
+            line-height: 2.375rem;
+            text-align: center;
+            pointer-events: none;
+            color: #aaa;
+        }
+    </style> *@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
@@ -53,6 +74,7 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="LogOut">logOut</a>
                             </li>
 
+
                         }
                         else
                         {
@@ -65,10 +87,16 @@
                             </li>
                         }
 
+                       @*  <li class="nav-item" style="align-content:flex-end">
+                            <div class="form-group has-search">
+                                <span class="fa fa-search form-control-feedback"></span>
+                                <input type="text" class="form-control" placeholder="Search" asp-area="" asp-controller="Book" asp-action="Search">
+                            </div>
+                        </li> *@
 
                     </ul>
-                   
-                    
+
+
                 </div>
             </div>
         </nav>
