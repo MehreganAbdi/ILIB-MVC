@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Loan>
+﻿@using ILIb1._1.ViewModels;
+@model IEnumerable<LoanVM>
 
 
 
@@ -11,10 +12,13 @@
     <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">UserId</th>
-            <th scope="col">LoanId</th>
-            <th scope="col">LoanDate</th>
-            
+            <th scope="col">User Id</th>
+            <th scope="col">UserName</th>
+            <th scope="col">Loan Id</th>
+            <th scope="col">Loan Date</th>
+            <th scope="col">Author</th>
+            <th scope="col">Book Title</th>
+            <th scope="col">Category</th>
         </tr>
     </thead>
     @{
@@ -25,9 +29,13 @@
         <tbody>
             <tr>
                 <th scope="row">@i</th>
-                <td>@item.UserId</td>
-                <td>@item.LoanId</td>
-                <td>@item.LoanDate</td>
+                <td>@item.Loan.UserId</td>
+                <td>@item.UserName</td>
+                <td>@item.Loan.LoanId</td>
+                <td>@item.Loan.LoanDate</td>
+                <td>@item.Author.FullName</td>
+                <td>@item.Book.Title</td>
+                <td>@item.Book.BookCategory</td>
                 
             </tr>
         </tbody>

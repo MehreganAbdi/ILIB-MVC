@@ -1,6 +1,7 @@
 ﻿using ILIb1._1.Data;
 using ILIb1._1.InterFaces;
 using ILIb1._1.Models;
+using ILIb1._1.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace ILIb1._1.Repository
@@ -111,6 +112,23 @@ namespace ILIb1._1.Repository
         {
             var saveVal = _context.SaveChanges();
             return saveVal > 0 ? true : false;
+        }
+
+        public async Task<LoanVM> GetLoanDetail(Loan loan)
+        {
+            var book = await _context.Books.Include(a=>a.Author).Where(b => b.BookId == loan.BookId).FirstOrDefaultAsync();
+            var author = book.Author;
+            var user = await _context.Users.FirstAsync(i => i.Id == loan.UserId);
+
+            var loanVM = new LoanVM()
+            {
+                Loan = loan,
+                Book = book,
+                Author = author,
+                UserName = user.UserName == null ? "Not Defined" : user.UserName
+            };
+
+            return  loanVM;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ILIb1._1.Models;
+using ILIb1._1.ViewModels;
 
 namespace ILIb1._1.InterFaces
 {
@@ -15,5 +16,6 @@ namespace ILIb1._1.InterFaces
         bool Save();
         bool UpdateUser(AppUser User);
         Task<AppUser> GetUserAsyncNoTracking(string Id);
+        Task<LoanVM> GetLoanDetail(Loan loan);
     }
 }
