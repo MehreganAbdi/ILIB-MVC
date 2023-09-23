@@ -9,6 +9,7 @@ namespace ILIb1._1.InterFaces
         Task<bool> IsBlockByBookCount(AppUser Uesr);
         Task<int> FinesValue(AppUser User);
          Task<int> AddFine(Loan loan);
+        bool RemoveMember(string UserId);
         bool AddLoan(Loan loan);
         Task<IEnumerable<Loan>> GetAll();
         Task<IEnumerable<Loan>> GetByUserIdAsync(string UserId);

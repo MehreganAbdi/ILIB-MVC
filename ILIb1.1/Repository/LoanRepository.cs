@@ -130,5 +130,11 @@ namespace ILIb1._1.Repository
 
             return  loanVM;
         }
+
+        public bool RemoveMember(string UserId)
+        {
+            _context.Users.Remove(_context.Users.Where(p => p.Id == UserId).FirstOrDefault());
+            return Save();
+        }
     }
 }

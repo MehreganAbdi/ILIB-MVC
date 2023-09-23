@@ -29,6 +29,7 @@
                 <td>@item.UserName</td>
                 <td>@item.BorrowedBookCount</td>
                 <td>@item.Fines</td>
+                <td><a asp-controller="AdminDashBoard" asp-action="DeleteMember" class="txt-dark" asp-route-id="@item.Id">Remove</a></td>
             </tr>
         </tbody>
         i++;

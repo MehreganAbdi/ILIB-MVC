@@ -45,7 +45,12 @@ namespace ILIb1._1.Controllers
             return RedirectToAction("Index", "Book");
         }
 
-
+        public async Task<IActionResult> DeleteMember(string Id)
+        {
+             _loanRepository.RemoveMember(Id);
+            return RedirectToAction("Index");
+            
+        }
         public async Task<IActionResult> Loans()
         {
             if (User.IsInRole("admin"))
