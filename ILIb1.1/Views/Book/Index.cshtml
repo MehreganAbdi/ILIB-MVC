@@ -20,14 +20,21 @@
         }
 
     </div>
-    
-</section>
 
-<div class="container">
+</section>
+<center>
     @using (Html.BeginForm("Index", "Book", FormMethod.Get))
     {
-        @Html.TextBox("searching")<input type="submit" value="Search"/>
+
+        @Html.TextBox("searching")
+        <br />
+        <br />
+        <input type="image" src="~/icons/search-3-32.png" style="width:40px; padding:5px; border-radius:20%" value="Search" class="btn-primary" />
+
     }
+</center>
+<div class="container">
+
     <br />
     <br />
 

@@ -13,18 +13,23 @@ namespace ILIb1._1.Controllers
         {
             _authorRepository = authorRepository;
         }
-        public async Task<IActionResult>  Index()
+        public async Task<IActionResult> Index(string searching)
         {
             var Authors = await _authorRepository.GetAll();
-            return View(Authors.DistinctBy(p=>p.FullName));
+            if (searching == null)
+            {
+                return View(Authors.DistinctBy(p => p.FullName));
+            }
+            Authors = Authors.Where(a => a.FullName.Contains(searching)).DistinctBy(p => p.FullName).ToList();
+            return View(Authors);
         }
-        
+
         public async Task<IActionResult> Detail(int Id)
         {
             var dataList = await _authorRepository.GetBooksByAuthor(Id);
-            return View(dataList); 
+            return View(dataList);
         }
-    
+
 
         public async Task<IActionResult> Delete(int Id)
         {
